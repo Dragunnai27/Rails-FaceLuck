@@ -1,0 +1,44 @@
+<h2> Chỉnh sửa tài khoản <%resource_name.to_s.humanize %></h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+  <% end %>
+
+  <div class="field">
+    <label>Mật khẩu mới</label> <i>(Hãy để trống nếu bạn không muốn thay đổi nó)</i><br />
+    <%= f.password_field :password, autocomplete: "new-password" %>
+    <% if @minimum_password_length %>
+      <br />
+      <em><%= @minimum_password_length %> ký tự tối thiểu</em>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <label>Nhập lại mật khẩu</label><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+  </div>
+
+  <div class="field">
+    <label>Mật khẩu cũ</label> <i>(Cần thiết để đặt lại mật khẩu)</i><br />
+    <%= f.password_field :current_password, autocomplete: "current-password" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Cập nhật lại" ,class:'btn btn-sm btn-primary' %>
+  </div>
+<% end %>
+
+<h3>hủy tài khoản</h3>
+
+<p>Bạn không hài lòng với tài khoản này ? 
+<%= button_to "Hủy tài khoản" , registration_path(resource_name), data: { confirm: "Bạn muốn xóa tài khoản ?" }, method: :delete %></p>
+
+<%= link_to "Quay lại", :back %>

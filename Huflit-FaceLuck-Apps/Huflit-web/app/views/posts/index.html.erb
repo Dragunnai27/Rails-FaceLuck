@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+
+<!-- Khi đã đăng nhập vào-->
+<% if user_signed_in? %>
+<h3 class="border-2 boder-primary rounded text-center" >Các bài viết của bạn</h3>
+  <% @posts.each do |post| %>
+      <!-- Khi đã đăng nhập và có trùng id với bài viết-->
+      <% if user_signed_in? && post.user_id == current_user.id%>
+        <div class="card m-4 bg-light">
+            <div class="card-body"> 
+            <!-- Hiển thị thời gian đăng bài viết-->
+             <p class="card-title text-primary"> Bài viết được đăng vào <%=post.created_at.strftime("%d/%m/%Y - %H:%M:%S %p")%> </p>
+              <p class="card-text text-center" style="font-family: 'Roboto Slab', serif;"><%= (post.articles).truncate(400, omission: '... (còn tiếp)')%></p>
+              <hr />
+                <!-- Cửa sổ tùy chỉnh -->
+                <div class="dropdown">
+                  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Tùy chỉnh bài viết
+                  </button>
+                  <div class="dropdown-menu">
+                      <%= link_to 'Sửa bài viết', edit_post_path(post), class:'dropdown-item' %>
+                      <%= link_to 'Xem bài viết', post, class:'dropdown-item' %>
+                      <div class="dropdown-divider"></div>
+                      <%= link_to 'Hủy bài viết', post, class:'dropdown-item text-danger', method: :delete, data: { confirm: 'Bạn có chắc muốn xóa ?' } %>
+                  </div>
+              </div>
+            </div>
+        </div>
+        
+    <% end %>
+  <% end %>
+ <!-- Khi chưa đăng nhập --> 
+   <% else %>
+   <h3 class="border-2 boder-primary rounded text-center" >Các bài viết của mọi người</h3>
+      <% @posts.each do |post| %>
+        <!--Tất cả các bài viết -->
+        <div class="card m-4 bg-light">
+          <h5 class="card-header"> "<%=post.author%>" <small>đã đăng bài viết </small></h5>
+            <div class="card-body"> 
+            <!-- Hiển thị thời gian đăng bài viết-->
+             <p class="card-title text-primary"> Bài viết được đăng vào <%=post.created_at.strftime("%d/%m/%Y - %H:%M:%S %p")%> </p>
+              <p class="card-text text-center" style="font-family: 'Roboto Slab', serif;"><%= (post.articles).truncate(400, omission: '... (còn tiếp)')%></p>
+            </div>
+        </div>
+        <%end%>
+    <% end %> 
+<br>
+

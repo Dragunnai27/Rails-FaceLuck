@@ -1,0 +1,57 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        
+      <%= link_to "Huflit FaceLuck", root_path, class:"navbar-brand border border-white rounded p-2"%>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+
+        <!--Kiểm tra người dùng có đang đăng nhập-->
+        <% if user_signed_in? %>
+          <ul class="navbar-nav">
+
+            <li class="nav-item active">
+              <%= link_to "Bài viết của mọi người", display_path, class:"nav-link" %>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+              Các tùy chỉnh
+              </a>
+              <!-- Thêm bài viết-->  
+              <div class="dropdown-menu">
+                 <%= link_to "Tạo bài viết", new_post_path, class:"dropdown-item" %>
+                 <div class="dropdown-divider"></div>
+                 <%= link_to "Bài viết của bạn", posts_path, class:"dropdown-item" %>
+              </div>                     
+            </li>
+          </ul>  
+        <% end %>
+
+        <ul class="navbar-nav ml-auto">
+          <!--Kiểm tra người dùng có đang đăng nhập-->
+          <% if user_signed_in? %>
+
+            <!-- Chỉnh sửa tài khoản-->    
+            <li class="nav-item">
+                <%= link_to current_user.email, edit_user_registration_path, class:"nav-link" %>
+            </li>
+
+            <!-- Nút đăng xuất-->
+            <li class="nav-item">
+                <%= link_to "Đăng xuất", destroy_user_session_path, method: :delete, class:"nav-link" %>
+            </li>
+            
+          <%else%>
+            <!-- Nút đăng nhập-->
+            <li class="nav-item">
+                 <%= link_to 'Đăng nhập', new_user_session_path, class: "nav-link" %>
+            </li>
+            <!-- Nút đăng kí-->
+            <li class="nav-item">
+                <%= link_to 'Đăng kí', new_user_registration_path, class: "nav-link" %>
+            </li>
+          <%end%>
+        </ul>
+      </div>
+</nav>

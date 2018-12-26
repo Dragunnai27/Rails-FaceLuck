@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HuflitWeb</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <!-- Render navigation-->
+    <%= render "layouts/navigation"%>
+
+    <!-- Bỏ phần thân vào container của BS4 -->
+    <div class="container p-2"> 
+      <%= yield %>
+    </div>
+
+    <!-- Render footer-->
+    <%= render "layouts/footer" %>
+
+  </body>
+</html>

@@ -1,0 +1,58 @@
+<p id="notice"><%= notice %></p>
+
+<div class="card m-4 bg-light">
+      <h5 class="card-header"> Nội dung bài viết của "<%=@post.author%>"</h5>
+            <div class="card-body"> 
+            <p class="card-text text-center"><%=@post.articles%></p>
+            <hr />
+            <% if(@post.user_id == current_user.id) %>
+                <%= link_to '<button type="button" class="btn btn-primary btn-sm">Chỉnh sửa</button>'.html_safe, edit_post_path(@post) %>
+            <% end %>
+      </div>
+</div>
+
+<!--Danh sách các bài bình luận-->
+<div class="m-4">
+  <h3> Mục bình luận </h3>
+  <div class="m-4">
+      <% @post.comments.each do |cmt|%>
+          <div class="card border-dark mb-3">
+            <div class="card-header"><%= cmt.author %>" đã bình luận <small><%=cmt.created_at.strftime("%d/%m/%Y - %H:%M:%S %p")%></small></div>
+            <div class="card-body text-dark">
+              <h6 class="card-title">"<%= cmt.body %>"</h6>
+              <%if user_signed_in? && cmt.user_id == current_user.id %>
+                  <%= link_to 'Hủy bình luận', method: :delete, data: { confirm: 'Bạn có chắc muốn xóa ?' } %>
+              <% end %>
+            </div>
+          </div>
+      <% end %>    
+  </div>
+
+   <!-- Khung nhập bài bình luận-->
+      <%if user_signed_in?%>
+        <%=form_for([@post , @post.comments.build]) do |p| %>
+            <p>
+                <label> Bình luận của bạn: </label>
+                <%= p.text_area :body, class:"form-control" %>
+            </P>
+            <p>
+                <%= p.submit 'Bình luận',class:'btn btn-sm btn-info' %>
+            </P>
+        <% end %>
+      <% end %>
+</div>
+
+<!--
+<p>
+  <strong>Like:</strong>
+  <%= @post.like %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @post.user %>
+</p>
+-->
+
+
+
